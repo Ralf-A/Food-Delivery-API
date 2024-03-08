@@ -26,7 +26,8 @@ public class WeatherParser {
     @Autowired
     private WeatherDataService weatherDataService;
 
-    @Scheduled(fixedRate = 60000) // Runs every 60 seconds
+    @Scheduled(fixedRate = 60000) // Runs every 60 seconds for testing
+    //@Scheduled(cron = "0 15 * * * ?") // For every HH:15 Cronjob
     public void parseWeatherData() {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
