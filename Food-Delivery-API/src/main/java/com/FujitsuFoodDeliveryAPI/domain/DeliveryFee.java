@@ -3,7 +3,7 @@ package com.FujitsuFoodDeliveryAPI.domain;
 public class DeliveryFee {
 
     // Method to calculate the delivery fee based on input parameters
-    public static double calculateDeliveryFee(String city, String vehicleType, double temperature, double windSpeed, String weatherPhenomenon) {
+    public double calculateDeliveryFee(String city, String vehicleType, double temperature, double windSpeed, String weatherPhenomenon) {
         double baseFee = getBaseFee(city, vehicleType);
         double temperatureFee = getTemperatureFee(temperature);
         double windSpeedFee = getWindSpeedFee(vehicleType, windSpeed);
@@ -12,7 +12,7 @@ public class DeliveryFee {
         return baseFee + temperatureFee + windSpeedFee + weatherPhenomenonFee;
     }
 
-    private static double getBaseFee(String city, String vehicleType) {
+    private double getBaseFee(String city, String vehicleType) {
         // Define base fees for each city and vehicle type
         switch (city) {
             case "Tallinn":
@@ -26,7 +26,7 @@ public class DeliveryFee {
         }
     }
 
-    private static double getTemperatureFee(double temperature) {
+    private double getTemperatureFee(double temperature) {
         // Extra fee for temperature
         if (temperature < -10.0) {
             return 1.0;
@@ -36,7 +36,7 @@ public class DeliveryFee {
         return 0.0;
     }
 
-    private static double getWindSpeedFee(String vehicleType, double windSpeed) {
+    private double getWindSpeedFee(String vehicleType, double windSpeed) {
         // Extra fee for wind speed (only for Bike)
         if ("Bike".equals(vehicleType) && windSpeed > 20.0) {
             throw new IllegalArgumentException("Usage of selected vehicle type is forbidden");
@@ -44,7 +44,7 @@ public class DeliveryFee {
         return windSpeed > 10.0 ? 0.5 : 0.0;
     }
 
-    private static double getWeatherPhenomenonFee(String weatherPhenomenon) {
+    private double getWeatherPhenomenonFee(String weatherPhenomenon) {
         // Extra fee for weather phenomenon
         switch (weatherPhenomenon) {
             case "Heavy snow shower":
