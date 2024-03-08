@@ -16,11 +16,11 @@ public class DeliveryFee {
         // Define base fees for each city and vehicle type
         switch (city) {
             case "Tallinn":
-                return vehicleType.equals("Car") ? 4.0 : vehicleType.equals("Scooter") ? 3.5 : 3.0;
+                return vehicleType.equals("car") ? 4.0 : vehicleType.equals("scooter") ? 3.5 : 3.0;
             case "Tartu":
-                return vehicleType.equals("Car") ? 3.5 : vehicleType.equals("Scooter") ? 3.0 : 2.5;
+                return vehicleType.equals("car") ? 3.5 : vehicleType.equals("scooter") ? 3.0 : 2.5;
             case "Pärnu":
-                return vehicleType.equals("Car") ? 3.0 : vehicleType.equals("Scooter") ? 2.5 : 2.0;
+                return vehicleType.equals("car") ? 3.0 : vehicleType.equals("scooter") ? 2.5 : 2.0;
             default:
                 throw new IllegalArgumentException("Unknown city");
         }

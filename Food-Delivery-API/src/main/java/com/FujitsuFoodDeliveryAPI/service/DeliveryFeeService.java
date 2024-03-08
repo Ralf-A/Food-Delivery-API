@@ -13,12 +13,12 @@ public class DeliveryFeeService {
     @Autowired
     private WeatherDataService weatherDataService;
 
-    public double calculateFee(String city, String vehicleType, LocalDateTime dateTime) {
+    public double calculateFee(String city, String vehicleType, LocalDateTime observationTimestamp) {
         WeatherData weatherData;
 
-        if (dateTime != null) {
+        if (observationTimestamp != null) {
             // Fetch historical weather data for the provided dateTime
-            weatherData = weatherDataService.getWeatherData(city, dateTime);
+            weatherData = weatherDataService.getWeatherData(city, observationTimestamp);
         } else {
             // Fetch current weather data
             weatherData = weatherDataService.getCurrentWeatherData(city);
