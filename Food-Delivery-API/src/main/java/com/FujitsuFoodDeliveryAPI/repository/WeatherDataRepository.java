@@ -13,11 +13,11 @@ import java.util.Optional;
 @Repository
 public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> {
 
-    // Custom query to find the latest weather data entry before a certain timestamp for a given station
-    @Query("SELECT wd FROM WeatherData wd WHERE wd.stationName = :stationName AND wd.observationTimestamp <= :timestamp ORDER BY wd.observationTimestamp DESC")
-    Optional<WeatherData> findTopByStationNameAndObservationTimestampLessThanEqualOrderByObservationTimestampDesc(@Param("stationName") String stationName, @Param("timestamp") Timestamp timestamp);
+    // Custom query to find the most recent weather data entry for a given WMO code and date, or just by WMO code if no date is provided
+    @Query("SELECT wd FROM WeatherData wd WHERE wd.wmoCode = :wmoCode AND (:timestamp IS NULL OR wd.observationTimestamp <= :timestamp) ORDER BY wd.observationTimestamp DESC")
+    Optional<WeatherData> findTopByWmoCodeAndObservationTimestampLessThanEqualOrderByObservationTimestampDesc(@Param("wmoCode") String wmoCode, @Param("timestamp") Timestamp timestamp);
 
-    // Custom query to find the most recent weather data entry for a given station
-    @Query("SELECT wd FROM WeatherData wd WHERE wd.stationName = :stationName ORDER BY wd.observationTimestamp DESC")
-    Optional<WeatherData> findTopByStationNameOrderByObservationTimestampDesc(@Param("stationName") String stationName);
+    // Custom query to find the most recent weather data entry for a given WMO code
+    @Query("SELECT wd FROM WeatherData wd WHERE wd.wmoCode = :wmoCode ORDER BY wd.observationTimestamp DESC")
+    Optional<WeatherData> findTopByWmoCodeOrderByObservationTimestampDesc(@Param("wmoCode") String wmoCode);
 }

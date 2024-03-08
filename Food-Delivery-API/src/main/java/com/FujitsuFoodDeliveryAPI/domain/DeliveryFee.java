@@ -8,8 +8,8 @@ public class DeliveryFee {
         double temperatureFee = getTemperatureFee(temperature);
         double windSpeedFee = getWindSpeedFee(vehicleType, windSpeed);
         double weatherPhenomenonFee = getWeatherPhenomenonFee(weatherPhenomenon);
-
-        return baseFee + temperatureFee + windSpeedFee + weatherPhenomenonFee;
+        double result = baseFee + temperatureFee + windSpeedFee + weatherPhenomenonFee;
+        return result;
     }
 
     private double getBaseFee(String city, String vehicleType) {

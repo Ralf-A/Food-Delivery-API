@@ -1,6 +1,7 @@
 package com.FujitsuFoodDeliveryAPI.service;
 
 import com.FujitsuFoodDeliveryAPI.domain.DeliveryFee;
+import com.FujitsuFoodDeliveryAPI.domain.WeatherData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,28 +11,25 @@ import java.time.LocalDateTime;
 public class DeliveryFeeService {
 
     @Autowired
-    private WeatherDataService weatherDataService; // Assuming this service can fetch weather data
+    private WeatherDataService weatherDataService;
 
     public double calculateFee(String city, String vehicleType, LocalDateTime dateTime) {
-        // Fetch weather conditions based on dateTime if provided, otherwise use current conditions
-        double temperature = 0.0;
-        double windSpeed = 0.0;
-        String weatherPhenomenon = "";
+        WeatherData weatherData;
 
         if (dateTime != null) {
             // Fetch historical weather data for the provided dateTime
-            // This is a placeholder for the actual logic
-            // temperature = ...;
-            // windSpeed = ...;
-            // weatherPhenomenon = ...;
+            weatherData = weatherDataService.getWeatherData(city, dateTime);
         } else {
             // Fetch current weather data
-            // This is a placeholder for the actual logic
-            // temperature = ...;
-            // windSpeed = ...;
-            // weatherPhenomenon = ...;
+            weatherData = weatherDataService.getCurrentWeatherData(city);
         }
 
+        // Extract weather conditions
+        double temperature = weatherData.getAirTemperature();
+        double windSpeed = weatherData.getWindSpeed();
+        String weatherPhenomenon = weatherData.getWeatherPhenomenon();
+
+        // Calculate and return the delivery fee
         DeliveryFee deliveryFee = new DeliveryFee();
         return deliveryFee.calculateDeliveryFee(city, vehicleType, temperature, windSpeed, weatherPhenomenon);
     }

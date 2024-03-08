@@ -31,16 +31,35 @@ public class WeatherDataService {
             LOGGER.error("Error saving weather data: {}", e.getMessage());
         }
     }
+    private String getCityCode(String city) {
+        switch (city.toLowerCase()) {
+            case "tallinn":
+                return "26038";
+            case "tartu":
+                return "26242";
+            case "pärnu":
+                return "41803";
+            default:
+                return city;
+        }
+    }
     public WeatherData getWeatherData(String city, LocalDateTime dateTime) {
+        String cityCode = getCityCode(city);
         Timestamp timestamp = Timestamp.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
         Optional<WeatherData> weatherData;
 
         if (dateTime != null) {
-            weatherData = weatherDataRepository.findTopByStationNameAndObservationTimestampLessThanEqualOrderByObservationTimestampDesc(city, timestamp);
+            weatherData = weatherDataRepository.findTopByWmoCodeAndObservationTimestampLessThanEqualOrderByObservationTimestampDesc(cityCode, timestamp);
         } else {
-            weatherData = weatherDataRepository.findTopByStationNameOrderByObservationTimestampDesc(city);
+            weatherData = weatherDataRepository.findTopByWmoCodeOrderByObservationTimestampDesc(cityCode);
         }
 
         return weatherData.orElseThrow(() -> new IllegalArgumentException("No weather data found for the specified parameters."));
+    }
+
+    public WeatherData getCurrentWeatherData(String city) {
+        String cityCode = getCityCode(city);
+       return weatherDataRepository.findTopByWmoCodeOrderByObservationTimestampDesc(cityCode)
+                .orElseThrow(() -> new IllegalArgumentException("No current weather data found for the specified city."));
     }
 }

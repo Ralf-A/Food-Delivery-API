@@ -17,10 +17,10 @@ public class DeliveryFeeController {
 
     @GetMapping("/calculateDeliveryFee")
     public double calculateDeliveryFee(
-            @RequestParam String town,
+            @RequestParam String city,
             @RequestParam String vehicle,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime) {
 
-        return deliveryFeeService.calculateFee(town, vehicle, dateTime);
+        return deliveryFeeService.calculateFee(city, vehicle, dateTime);
     }
 }
