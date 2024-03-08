@@ -1,5 +1,8 @@
 package com.FujitsuFoodDeliveryAPI.config;
 
+import com.FujitsuFoodDeliveryAPI.domain.WeatherData;
+import com.FujitsuFoodDeliveryAPI.repository.WeatherDataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,6 +22,9 @@ import org.xml.sax.InputSource;
 @EnableScheduling
 public class WeatherParser {
 
+    @Autowired
+    private WeatherDataRepository weatherDataRepository;
+
     @Scheduled(fixedRate = 60000) // Runs every 60 seconds
     public void parseWeatherData() {
         try {
@@ -34,12 +40,28 @@ public class WeatherParser {
                     Element element = (Element) node;
                     String wmoCode = element.getElementsByTagName("wmocode").item(0).getTextContent();
                     if ("26038".equals(wmoCode) || "26242".equals(wmoCode) || "41803".equals(wmoCode)) {
-                        //parseAndInsertWeatherData(element);
+                        WeatherData weatherData = parseElementToWeatherData(element);
+                        weatherDataRepository.save(weatherData);
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private WeatherData parseElementToWeatherData(Element element) {
+        WeatherData weatherData = new WeatherData();
+        weatherData.setStationName(element.getElementsByTagName("name").item(0).getTextContent());
+        weatherData.setWmoCode(element.getElementsByTagName("wmocode").item(0).getTextContent());
+        weatherData.setAirTemperature(Double.parseDouble(element.getElementsByTagName("airtemperature").item(0).getTextContent()));
+        weatherData.setWindSpeed(Double.parseDouble(element.getElementsByTagName("windspeed").item(0).getTextContent()));
+        weatherData.setObservationTimestamp(new Timestamp(System.currentTimeMillis()));
+        try {
+            weatherData.setWeatherPhenomenon(element.getElementsByTagName("phenomenon").item(0).getTextContent());
+        } catch (Exception ignored) {
+            weatherData.setWeatherPhenomenon(null);
+        }
+        return weatherData;
     }
 }
