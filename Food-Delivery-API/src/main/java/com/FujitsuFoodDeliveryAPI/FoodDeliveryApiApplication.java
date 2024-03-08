@@ -1,4 +1,4 @@
-package com.FujitsuFoodDeliveryAPI.API;
+package com.FujitsuFoodDeliveryAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
