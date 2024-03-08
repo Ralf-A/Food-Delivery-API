@@ -2,6 +2,7 @@ package com.FujitsuFoodDeliveryAPI.config;
 
 import com.FujitsuFoodDeliveryAPI.domain.WeatherData;
 import com.FujitsuFoodDeliveryAPI.repository.WeatherDataRepository;
+import com.FujitsuFoodDeliveryAPI.service.WeatherDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,7 +24,7 @@ import org.xml.sax.InputSource;
 public class WeatherParser {
 
     @Autowired
-    private WeatherDataRepository weatherDataRepository;
+    private WeatherDataService weatherDataService;
 
     @Scheduled(fixedRate = 60000) // Runs every 60 seconds
     public void parseWeatherData() {
@@ -41,7 +42,7 @@ public class WeatherParser {
                     String wmoCode = element.getElementsByTagName("wmocode").item(0).getTextContent();
                     if ("26038".equals(wmoCode) || "26242".equals(wmoCode) || "41803".equals(wmoCode)) {
                         WeatherData weatherData = parseElementToWeatherData(element);
-                        weatherDataRepository.save(weatherData);
+                        weatherDataService.saveWeatherData(weatherData);
                     }
                 }
             }
