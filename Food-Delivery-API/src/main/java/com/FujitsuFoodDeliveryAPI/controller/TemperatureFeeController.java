@@ -3,10 +3,9 @@ package com.FujitsuFoodDeliveryAPI.controller;
 import com.FujitsuFoodDeliveryAPI.domain.TemperatureFees;
 import com.FujitsuFoodDeliveryAPI.service.TemperatureFeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,18 +15,20 @@ public class TemperatureFeeController {
     @Autowired
     private TemperatureFeeService temperatureFeeService;
 
-    @GetMapping("/temperatureFee")
-    public void postTemperatureFee(
-            @RequestParam(required = false) double coldTemperatureCeiling,
-            @RequestParam(required = false) double lowTemperatureCeiling,
-            @RequestParam(required = false) double coldTemperatureFee,
-            @RequestParam(required = false) double lowTemperatureFee
+    @RequestMapping(value = "/postTemperatureFees", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<TemperatureFees> postTemperatureFees(
+            @RequestParam(required = false) Double coldTemperatureCeiling,
+            @RequestParam(required = false) Double lowTemperatureCeiling,
+            @RequestParam(required = false) Double coldTemperatureFee,
+            @RequestParam(required = false) Double lowTemperatureFee
     ) {
-        temperatureFeeService.saveTemperatureFees(coldTemperatureCeiling, lowTemperatureCeiling, coldTemperatureFee, lowTemperatureFee);
+        TemperatureFees temperatureFees = temperatureFeeService.saveTemperatureFees(coldTemperatureCeiling, lowTemperatureCeiling, coldTemperatureFee, lowTemperatureFee);
+        return new ResponseEntity<>(temperatureFees, HttpStatus.CREATED);
     }
 
-    @GetMapping("/temperatureFees")
-    public List<TemperatureFees> getLatestTemperatureFees() {
+
+    @GetMapping("/getTemperatureFees")
+    public TemperatureFees getLatestTemperatureFees() {
         return temperatureFeeService.findLatestTemperatureFees();
     }
 }
