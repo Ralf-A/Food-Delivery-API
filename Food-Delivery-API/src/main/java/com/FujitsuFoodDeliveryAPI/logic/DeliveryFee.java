@@ -1,9 +1,14 @@
-package com.FujitsuFoodDeliveryAPI.domain;
+package com.FujitsuFoodDeliveryAPI.logic;
 
 import com.FujitsuFoodDeliveryAPI.exception.InvalidCityException;
 import com.FujitsuFoodDeliveryAPI.exception.InvalidVehicleException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DeliveryFee {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryFee.class);
+
 
     // Method to calculate the delivery fee based on input parameters
     public double calculateDeliveryFee(String city, String vehicleType, double temperature, double windSpeed, String weatherPhenomenon) {
@@ -12,6 +17,8 @@ public class DeliveryFee {
         double windSpeedFee = getWindSpeedFee(vehicleType, windSpeed);
         double weatherPhenomenonFee = getWeatherPhenomenonFee(weatherPhenomenon);
         double result = baseFee + temperatureFee + windSpeedFee + weatherPhenomenonFee;
+        LOGGER.info("Getting fee for city: " + city + ", vehicle: " + vehicleType + ", for temperature: " + temperature + ", for windSpeed: " +
+                windSpeed + ", for weatherphenomenon: " + weatherPhenomenon + ", TOTAL FEE: " + result);
         return result;
     }
 

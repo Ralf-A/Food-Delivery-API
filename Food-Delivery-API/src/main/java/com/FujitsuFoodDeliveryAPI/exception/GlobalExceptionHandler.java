@@ -13,26 +13,24 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IncorrectTimeStampException.class)
-    public ResponseEntity<Object> handleTooEarlyTimestampException(IncorrectTimeStampException ex) {
+    public ResponseEntity<Object> handleIncorrectTimestampException(IncorrectTimeStampException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", ex.getMessage());
+        body.put("error", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidVehicleException.class)
-    public ResponseEntity<Object> handleInvalidVehicleTypeException(InvalidVehicleException ex) {
+    public ResponseEntity<Object> handleInvalidVehicleException(InvalidVehicleException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", ex.getMessage());
+        body.put("error", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidCityException.class)
     public ResponseEntity<Object> handleInvalidCityException(InvalidCityException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", ex.getMessage());
+        body.put("error", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
-
-    // ... other exception handlers
 }
 

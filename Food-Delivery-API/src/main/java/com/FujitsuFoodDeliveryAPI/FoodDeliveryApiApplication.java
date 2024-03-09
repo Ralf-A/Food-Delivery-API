@@ -1,7 +1,5 @@
 package com.FujitsuFoodDeliveryAPI;
 
-import com.FujitsuFoodDeliveryAPI.domain.DeliveryFee;
-import jakarta.annotation.security.PermitAll;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

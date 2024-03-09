@@ -58,24 +58,26 @@ public class WeatherDataService {
         return Timestamp.valueOf(dateTime);
     }
 
-    public WeatherData getWeatherData(String city, LocalDateTime dateTime) {
+    public WeatherData getTimestampWeatherData(String city, LocalDateTime dateTime) {
         String cityCode = getCityCode(city);
+        Optional<WeatherData> weatherData;
+
         if (dateTime != null) {
             try {
                 Timestamp roundedTimestamp = roundToNearestMinute(dateTime);
                 LOGGER.info("Fetching weather data for city code: " + cityCode + " at timestamp: " + roundedTimestamp);
-                Optional<WeatherData> weatherData = weatherDataRepository.findByWmoCode_Timestamp(cityCode, roundedTimestamp);
-                return weatherData.orElseThrow(() -> new IncorrectTimeStampException("No weather data found for this timestamp " + dateTime));
+                weatherData = weatherDataRepository.findByWmoCode_Timestamp(cityCode, roundedTimestamp);
             } catch (Exception e) {
                 throw new IncorrectTimeStampException("Incorrect time format");
             }
+            return weatherData.orElseThrow(() -> new IncorrectTimeStampException("No weather data found for this timestamp: " + dateTime));
         } else {
-            LOGGER.info("Fetching weather data for city code: " + cityCode + " for most recent timestamp");
-            return getCurrentWeatherData(city);
+            LOGGER.info("Fetching weather data for city code: " + cityCode + " for the most recent timestamp");
+            weatherData = weatherDataRepository.findByWmoCode(cityCode);
+            return weatherData.orElseThrow(() -> new IncorrectTimeStampException("No weather data found for the most recent timestamp, " +
+                    "usage - yyyy-mm-ddThh:mm"));
         }
     }
-
-
 
 
     public WeatherData getCurrentWeatherData(String city) {
