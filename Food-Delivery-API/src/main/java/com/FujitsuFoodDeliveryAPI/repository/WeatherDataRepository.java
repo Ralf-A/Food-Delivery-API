@@ -19,6 +19,6 @@ public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> 
 
 
     // Custom query to find the most recent weather data entry for a given WMO code
-    @Query("SELECT wd FROM WeatherData wd WHERE wd.wmoCode = :wmoCode ORDER BY wd.observationTimestamp DESC")
+    @Query("SELECT wd FROM WeatherData wd WHERE wd.wmoCode = :wmoCode ORDER BY wd.observationTimestamp DESC LIMIT 1")
     Optional<WeatherData> findByWmoCode(@Param("wmoCode") String wmoCode);
 }

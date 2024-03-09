@@ -12,18 +12,16 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(TooEarlyTimestampException.class)
-    public ResponseEntity<Object> handleTooEarlyTimestampException(TooEarlyTimestampException ex) {
+    @ExceptionHandler(IncorrectTimeStampException.class)
+    public ResponseEntity<Object> handleTooEarlyTimestampException(IncorrectTimeStampException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(InvalidVehicleTypeException.class)
-    public ResponseEntity<Object> handleInvalidVehicleTypeException(InvalidVehicleTypeException ex) {
+    @ExceptionHandler(InvalidVehicleException.class)
+    public ResponseEntity<Object> handleInvalidVehicleTypeException(InvalidVehicleException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
@@ -31,12 +29,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCityException.class)
     public ResponseEntity<Object> handleInvalidCityException(InvalidCityException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
     // ... other exception handlers
 }
-{
-}
+

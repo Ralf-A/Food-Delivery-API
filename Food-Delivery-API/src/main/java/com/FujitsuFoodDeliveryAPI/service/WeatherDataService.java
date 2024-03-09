@@ -1,6 +1,8 @@
 package com.FujitsuFoodDeliveryAPI.service;
 
 import com.FujitsuFoodDeliveryAPI.domain.WeatherData;
+import com.FujitsuFoodDeliveryAPI.exception.IncorrectTimeStampException;
+import com.FujitsuFoodDeliveryAPI.exception.InvalidCityException;
 import com.FujitsuFoodDeliveryAPI.repository.WeatherDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,14 +61,16 @@ public class WeatherDataService {
     public WeatherData getWeatherData(String city, LocalDateTime dateTime) {
         String cityCode = getCityCode(city);
         if (dateTime != null) {
-            // Adjust dateTime to the previous quarter-hour mark
-            Timestamp roundedTimestamp = roundToNearestMinute(dateTime);
-
-            LOGGER.info("Fetching weather data for city code: " + cityCode + " at timestamp: " + roundedTimestamp);
-            Optional<WeatherData> weatherData = weatherDataRepository.findByWmoCode_Timestamp(cityCode, roundedTimestamp);
-            return weatherData.orElseThrow(() -> new IllegalArgumentException("No weather data found for the specified parameters."));
+            try {
+                Timestamp roundedTimestamp = roundToNearestMinute(dateTime);
+                LOGGER.info("Fetching weather data for city code: " + cityCode + " at timestamp: " + roundedTimestamp);
+                Optional<WeatherData> weatherData = weatherDataRepository.findByWmoCode_Timestamp(cityCode, roundedTimestamp);
+                return weatherData.orElseThrow(() -> new IncorrectTimeStampException("No weather data found for this timestamp " + dateTime));
+            } catch (Exception e) {
+                throw new IncorrectTimeStampException("Incorrect time format");
+            }
         } else {
-            // Fetch current weather data
+            LOGGER.info("Fetching weather data for city code: " + cityCode + " for most recent timestamp");
             return getCurrentWeatherData(city);
         }
     }
@@ -76,7 +80,8 @@ public class WeatherDataService {
 
     public WeatherData getCurrentWeatherData(String city) {
         String cityCode = getCityCode(city);
-       return weatherDataRepository.findByWmoCode(cityCode)
-                .orElseThrow(() -> new IllegalArgumentException("No current weather data found for the specified city."));
+        LOGGER.info("Fetching weather data for city code: " + cityCode + " for most recent timestamp");
+        Optional<WeatherData> weatherData = weatherDataRepository.findByWmoCode(cityCode);
+        return weatherData.orElseThrow(() -> new InvalidCityException("No current weather data found for the specified city."));
     }
 }

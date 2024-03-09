@@ -1,5 +1,8 @@
 package com.FujitsuFoodDeliveryAPI.domain;
 
+import com.FujitsuFoodDeliveryAPI.exception.InvalidCityException;
+import com.FujitsuFoodDeliveryAPI.exception.InvalidVehicleException;
+
 public class DeliveryFee {
 
     // Method to calculate the delivery fee based on input parameters
@@ -16,15 +19,40 @@ public class DeliveryFee {
         // Define base fees for each city and vehicle type
         switch (city) {
             case "Tallinn":
-                return vehicleType.equals("car") ? 4.0 : vehicleType.equals("scooter") ? 3.5 : 3.0;
+                if ("car".equals(vehicleType)) {
+                    return 4.0;
+                } else if ("scooter".equals(vehicleType)) {
+                    return 3.5;
+                } else if ("bike".equals(vehicleType)) {
+                    return 3.0;
+                } else {
+                    throw new InvalidVehicleException("Invalid vehicle type");
+                }
             case "Tartu":
-                return vehicleType.equals("car") ? 3.5 : vehicleType.equals("scooter") ? 3.0 : 2.5;
+                if ("car".equals(vehicleType)) {
+                    return 3.5;
+                } else if ("scooter".equals(vehicleType)) {
+                    return 3.0;
+                } else if ("bike".equals(vehicleType)) {
+                    return 2.5;
+                } else {
+                    throw new InvalidVehicleException("Invalid vehicle type");
+                }
             case "Pärnu":
-                return vehicleType.equals("car") ? 3.0 : vehicleType.equals("scooter") ? 2.5 : 2.0;
+                if ("car".equals(vehicleType)) {
+                    return 3.0;
+                } else if ("scooter".equals(vehicleType)) {
+                    return 2.5;
+                } else if ("bike".equals(vehicleType)) {
+                    return 2.0;
+                } else {
+                    throw new InvalidVehicleException("Invalid vehicle type");
+                }
             default:
-                throw new IllegalArgumentException("Unknown city");
+                throw new InvalidCityException("Unknown city");
         }
     }
+
 
     private double getTemperatureFee(double temperature) {
         // Extra fee for temperature
@@ -39,7 +67,7 @@ public class DeliveryFee {
     private double getWindSpeedFee(String vehicleType, double windSpeed) {
         // Extra fee for wind speed (only for Bike)
         if ("Bike".equals(vehicleType) && windSpeed > 20.0) {
-            throw new IllegalArgumentException("Usage of selected vehicle type is forbidden");
+            throw new InvalidVehicleException("Usage of selected vehicle type is forbidden");
         }
         return windSpeed > 10.0 ? 0.5 : 0.0;
     }
