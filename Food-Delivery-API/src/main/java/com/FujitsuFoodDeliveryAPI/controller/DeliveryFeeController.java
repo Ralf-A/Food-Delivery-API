@@ -19,7 +19,7 @@ public class DeliveryFeeController {
     public double calculateDeliveryFee(
             @RequestParam String city,
             @RequestParam String vehicle,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime) {
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime dateTime ) {
 
         return deliveryFeeService.calculateFee(city, vehicle, dateTime);
     }

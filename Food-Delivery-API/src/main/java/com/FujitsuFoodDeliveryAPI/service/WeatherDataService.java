@@ -43,23 +43,40 @@ public class WeatherDataService {
                 return city;
         }
     }
-    public WeatherData getWeatherData(String city, LocalDateTime dateTime) {
-        String cityCode = getCityCode(city);
-        Timestamp timestamp = Timestamp.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
-        Optional<WeatherData> weatherData;
+    public Timestamp roundToNearestMinute(LocalDateTime dateTime) {
+        int second = dateTime.getSecond();
+        int roundedSecond = (second >= 30) ? 60 : 0;
+        dateTime = dateTime.withSecond(0).withNano(0);
 
-        if (dateTime != null) {
-            weatherData = weatherDataRepository.findTopByWmoCodeAndObservationTimestampLessThanEqualOrderByObservationTimestampDesc(cityCode, timestamp);
-        } else {
-            weatherData = weatherDataRepository.findTopByWmoCodeOrderByObservationTimestampDesc(cityCode);
+        // If rounding seconds exceeds 60, increment the minute
+        if (roundedSecond >= 60) {
+            dateTime = dateTime.plusMinutes(1).withSecond(0);
         }
 
-        return weatherData.orElseThrow(() -> new IllegalArgumentException("No weather data found for the specified parameters."));
+        return Timestamp.valueOf(dateTime);
     }
+
+    public WeatherData getWeatherData(String city, LocalDateTime dateTime) {
+        String cityCode = getCityCode(city);
+        if (dateTime != null) {
+            // Adjust dateTime to the previous quarter-hour mark
+            Timestamp roundedTimestamp = roundToNearestMinute(dateTime);
+
+            LOGGER.info("Fetching weather data for city code: " + cityCode + " at timestamp: " + roundedTimestamp);
+            Optional<WeatherData> weatherData = weatherDataRepository.findByWmoCode_Timestamp(cityCode, roundedTimestamp);
+            return weatherData.orElseThrow(() -> new IllegalArgumentException("No weather data found for the specified parameters."));
+        } else {
+            // Fetch current weather data
+            return getCurrentWeatherData(city);
+        }
+    }
+
+
+
 
     public WeatherData getCurrentWeatherData(String city) {
         String cityCode = getCityCode(city);
-       return weatherDataRepository.findTopByWmoCodeOrderByObservationTimestampDesc(cityCode)
+       return weatherDataRepository.findByWmoCode(cityCode)
                 .orElseThrow(() -> new IllegalArgumentException("No current weather data found for the specified city."));
     }
 }
