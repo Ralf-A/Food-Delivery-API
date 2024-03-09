@@ -1,6 +1,5 @@
 package com.FujitsuFoodDeliveryAPI.repository;
 
-import com.FujitsuFoodDeliveryAPI.domain.TemperatureFees;
 import com.FujitsuFoodDeliveryAPI.domain.VehicleTypeFees;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
