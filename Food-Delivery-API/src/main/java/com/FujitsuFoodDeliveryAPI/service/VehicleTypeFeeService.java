@@ -12,6 +12,9 @@ import java.util.List;
 
 @Service
 public class VehicleTypeFeeService {
+    /**
+     * Service class responsible for posting and getting vehicle type fees, depending on city and vehicle type
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(VehicleTypeFeeService.class);
 
     @Autowired

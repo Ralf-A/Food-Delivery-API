@@ -20,6 +20,10 @@ public class DeliveryFeeController {
     @Autowired
     private DeliveryFeeService deliveryFeeService;
 
+    /**
+     * Controller for calculating delivery fee - specific API documentation on GitHub page
+     */
+
     @GetMapping("/calculateDeliveryFee")
     public double calculateDeliveryFee(
             @RequestParam String city,

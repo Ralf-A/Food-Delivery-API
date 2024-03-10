@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -41,6 +42,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
                 "The parameter '" + name + "' is required.",
                 HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        String name = ex.getName();
+        String type = ex.getRequiredType().getSimpleName();
+        Object value = ex.getValue();
+        String message = String.format("The parameter '%s' requires a value of type '%s', but '%s' was provided.", name, type, value);
+
+        // Log the exception details for debugging
+        // Return a user-friendly message and a Bad Request status
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }
 

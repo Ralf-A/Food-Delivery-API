@@ -13,6 +13,10 @@ import java.util.List;
 
 @RestController
 public class VehicleTypeFeeController {
+    /**
+     * Controller for vehicle type fee - specific API documentation on GitHub page
+     */
+
 
     @Autowired
     private VehicleTypeFeeService vehicleTypeFeeService;

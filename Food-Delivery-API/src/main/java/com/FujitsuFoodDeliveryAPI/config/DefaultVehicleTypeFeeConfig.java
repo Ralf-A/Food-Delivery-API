@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 public class DefaultVehicleTypeFeeConfig {
     @Autowired
     private VehicleTypeFeeRepository vehicleTypeFeeRepository;
+    /**
+     * Adds default configuration from task's description for fee calculation
+     */
 
     @Bean
     public VehicleTypeFees defaultVehicleTypeFee() {

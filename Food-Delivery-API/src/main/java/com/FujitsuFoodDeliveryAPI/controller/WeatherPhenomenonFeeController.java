@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class WeatherPhenomenonFeeController {
+    /**
+     * Controller for weather phenomenon fee - specific API documentation on GitHub page
+     */
+
     @Autowired
     private WeatherPhenomenonFeeService weatherPhenomenonService;
 

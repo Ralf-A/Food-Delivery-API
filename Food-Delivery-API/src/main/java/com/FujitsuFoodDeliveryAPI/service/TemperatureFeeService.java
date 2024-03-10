@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TemperatureFeeService {
+    /**
+     * Service class responsible for posting and getting temperature fees
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(TemperatureFeeService.class);
 
 

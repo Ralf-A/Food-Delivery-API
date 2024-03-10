@@ -11,6 +11,9 @@ import java.util.List;
 
 @RestController
 public class TemperatureFeeController {
+    /**
+     * Controller for temperature fee - specific API documentation on GitHub page
+     */
 
     @Autowired
     private TemperatureFeeService temperatureFeeService;

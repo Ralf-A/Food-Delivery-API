@@ -3,6 +3,7 @@ package com.FujitsuFoodDeliveryAPI.config;
 import com.FujitsuFoodDeliveryAPI.domain.WeatherData;
 import com.FujitsuFoodDeliveryAPI.repository.WeatherDataRepository;
 import com.FujitsuFoodDeliveryAPI.service.WeatherDataService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +18,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.util.logging.Logger;
+
 import org.xml.sax.InputSource;
 
 @Component
@@ -26,8 +29,19 @@ public class WeatherParser {
     @Autowired
     private WeatherDataService weatherDataService;
 
-    @Scheduled(fixedRate = 60000) // Runs every 60 seconds for testing
-    //@Scheduled(cron = "0 15 * * * ?") // For every HH:15 Cronjob
+    /**
+     * Initializes the parser and triggers the first data parsing operation at application startup.
+     */
+    @PostConstruct
+    public void init() {
+        parseWeatherData();
+    }
+    @Scheduled(cron = "0 15 * * * ?") // The scheduled task to run every HH:15
+    //@Scheduled(fixedRate = 60000) // Runs every 60 seconds for testing
+
+    /**
+     * Scheduled task that runs every hour at 15 minutes past the hour to parse weather data.
+     */
     public void parseWeatherData() {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -52,6 +66,12 @@ public class WeatherParser {
         }
     }
 
+    /**
+     * Parses an XML element into a WeatherData object.
+     *
+     * @param element the XML element representing a weather station
+     * @return a WeatherData object populated with the parsed data
+     */
     private WeatherData parseElementToWeatherData(Element element) {
         WeatherData weatherData = new WeatherData();
         weatherData.setStationName(element.getElementsByTagName("name").item(0).getTextContent());

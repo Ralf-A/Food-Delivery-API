@@ -14,9 +14,12 @@ public class WeatherPhenomenonFees {
     private Long id;
 
     @Column(nullable = false)
+    // default 1.0
     private double heavyWeatherFee;
     @Column(nullable = false)
+    // default 0.5
     private double badWeatherFee;
     @Column(nullable = false)
+    // default 0
     private double normalWeatherFee;
 }

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class WindSpeedFeeController {
+    /**
+     * Controller for wind speed fee - specific API documentation on GitHub page
+     */
+
     @Autowired
     private WindSpeedFeeService windSpeedFeeService;
 

@@ -12,6 +12,9 @@ import java.util.List;
 
 @Service
 public class WeatherPhenomenonFeeService {
+    /**
+     * Service class responsible for posting and getting weather phenomenon fees
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(WeatherPhenomenonFeeService.class);
 
     @Autowired

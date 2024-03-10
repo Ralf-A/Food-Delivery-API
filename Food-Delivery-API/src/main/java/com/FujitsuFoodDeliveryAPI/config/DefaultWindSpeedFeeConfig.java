@@ -12,6 +12,9 @@ public class DefaultWindSpeedFeeConfig {
 
     @Autowired
     private WindSpeedFeeRepository windSpeedFeeRepository;
+    /**
+     * Adds default configuration from task's description for fee calculation
+     */
 
     @Bean
     public WindSpeedFees defaultWindSpeedFee() {

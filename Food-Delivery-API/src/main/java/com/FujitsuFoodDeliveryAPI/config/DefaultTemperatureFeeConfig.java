@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DefaultTemperatureFeeConfig {
+    /**
+     * Adds default configuration from task's description for fee calculation
+     */
 
     @Autowired
     private TemperatureFeeRepository temperatureFeeRepository;

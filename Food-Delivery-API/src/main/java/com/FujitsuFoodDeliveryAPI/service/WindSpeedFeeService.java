@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WindSpeedFeeService {
+    /**
+     * Service class responsible for posting and getting wind speed fees
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(WindSpeedFeeService.class);
     @Autowired
     private WindSpeedFeeRepository windSpeedFeeRepository;

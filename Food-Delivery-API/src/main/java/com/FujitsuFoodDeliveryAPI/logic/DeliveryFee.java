@@ -39,8 +39,15 @@ public class DeliveryFee {
     private TemperatureFeeRepository temperatureFeeRepository;
 
 
-    // Method to calculate the delivery fee based on input parameters
-
+    /**
+     * Calculates the total delivery fee based on the provided parameters
+     * @param city              the city where delivery is to be made
+     * @param vehicleType       the type of vehicle used
+     * @param temperature       the temperature of the area at specified time
+     * @param windSpeed         the wind speed of the area at specified time
+     * @param weatherPhenomenon the weather phenomenon of the area at specified time
+     * @return the total calculated delivery fee
+     */
     public double calculateDeliveryFee(String city, String vehicleType, double temperature, double windSpeed, String weatherPhenomenon) {
         vehicleType = vehicleType.toLowerCase();
         weatherPhenomenon = weatherPhenomenon.toLowerCase();
@@ -54,8 +61,16 @@ public class DeliveryFee {
         return result;
     }
 
+    /**
+     * Retrieves the base fee for a given city and vehicle type.
+     * @param city          the city where the delivery is to be made
+     * @param vehicleType   the type of vehicle used for delivery
+     * @return the base fee for the specified city and vehicle type
+     * @throws InvalidVehicleException if the vehicle type is not recognized
+     */
     private double getBaseFee(String city, String vehicleType) {
         VehicleTypeFees vehicleTypeFees = vehicleTypeFeeRepository.findLatestVehicleTypeFees();
+        LOGGER.info("Getting base fee for city " + city + " and vehicle " + vehicleType);
         switch (city) {
             case "Tallinn":
                 if ("car".equals(vehicleType)) {
@@ -92,10 +107,16 @@ public class DeliveryFee {
         }
     }
 
-
-
+    /**
+     * Calculates the additional fee based on the temperature and vehicle type.
+     *
+     * @param vehicleType the type of vehicle used for delivery
+     * @param temperature the current temperature in the delivery area
+     * @return the additional temperature-based fee or 0.0 if no fee applies
+     */
     private double getTemperatureFee(String vehicleType, double temperature) {
         if (vehicleType.equals("bike") || vehicleType.equals("scooter")) {
+            LOGGER.info("Getting temperature extra fee for temperature of " + temperature + "C and vehicle " + vehicleType);
             TemperatureFees temperatureFees = temperatureFeeRepository.findLatestTemperatureFees();
             if (temperature < temperatureFees.getColdTemperatureCeiling()) {
                 return temperatureFees.getColdTemperatureFee();
@@ -106,16 +127,34 @@ public class DeliveryFee {
         return 0.0;
     }
 
+    /**
+     * Calculates the additional fee based on the wind speed and vehicle type.
+     *
+     * @param vehicleType the type of vehicle used for delivery
+     * @param windSpeed   the current wind speed in the delivery area
+     * @return the additional wind speed-based fee or 0.0 if no fee applies
+     * @throws InvalidVehicleException if the vehicle type is not suitable for the current wind conditions
+     */
     private double getWindSpeedFee(String vehicleType, double windSpeed) {
         WindSpeedFees windSpeedFees = windSpeedFeeRepository.findLatestWindSpeedFees();
         if ("bike".equals(vehicleType) && windSpeed > windSpeedFees.getWindFeeCeiling()) {
+            LOGGER.info("Getting windspeed extra fee for wind speed of " + windSpeed + "m/s and vehicle " + vehicleType);
             throw new InvalidVehicleException("Usage of selected vehicle type is forbidden");
         }
         return windSpeed > windSpeedFees.getWindFeeFloor() ? windSpeedFees.getWindFee() : 0.0;
     }
 
+    /**
+     * Calculates the additional fee based on the weather phenomenon and vehicle type.
+     *
+     * @param vehicleType       the type of vehicle used for delivery
+     * @param weatherPhenomenon the current weather phenomenon in the delivery area
+     * @return the additional weather phenomenon-based fee or 0.0 if no fee applies
+     * @throws InvalidVehicleException if the vehicle type is not suitable for the current weather conditions
+     */
     private double getWeatherPhenomenonFee(String vehicleType, String weatherPhenomenon) {
         if ("bike".equals(vehicleType) || ("scooter").equals(vehicleType)){
+            LOGGER.info("Getting weather phenomenon extra fee for phenomenon speed of " + weatherPhenomenon + " and vehicle " + vehicleType);
             WeatherPhenomenonFees weatherPhenomenonFees = weatherPhenomenonFeeRepository.findLatestWeatherPhenomenonFees();
             if (weatherPhenomenon.equals("glaze") || weatherPhenomenon.equals("hail") || weatherPhenomenon.equals("thunder")){
                 throw new InvalidVehicleException("“Usage of selected vehicle type is forbidden");
