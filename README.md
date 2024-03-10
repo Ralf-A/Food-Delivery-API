@@ -20,12 +20,6 @@ By default all business logic is same as in task's description, but base fees an
   - `dateTime` (LocalDateTime, optional): The date and time for delivery, formatted as `yyyy-MM-dd'T'HH:mm`.
 - **Response**: A double value representing the calculated delivery fee.
 
-## Exception Handlers
-
-### DateTimeParseException Handler
-- **Description**: Handles incorrect date and time format inputs.
-- **Response**: A `400 Bad Request` status with a message indicating the correct date and time format.
-
 ## Vehicle Type Fees Endpoints
 
 ### POST /postVehicleTypeFees
@@ -92,4 +86,37 @@ By default all business logic is same as in task's description, but base fees an
 - **Description**: Retrieve the latest fees based on weather phenomena.
 - **Response**: `WeatherPhenomenonFees` object.
 
+# Exception Handling in Fujitsu Food Delivery API
+
+## Overview
+The `GlobalExceptionHandler` class in the Fujitsu Food Delivery API provides centralized exception handling across all `@RequestMapping` methods through `@ExceptionHandler` methods.
+
+## Exceptions
+
+### IncorrectTimeStampException
+- **Description**: This exception is thrown when the timestamp provided is incorrect or in an invalid format.
+- **Response**: Returns a `400 Bad Request` with an error message detailing the issue.
+
+### InvalidVehicleException
+- **Description**: This exception is thrown when the vehicle type provided does not match any known types.
+- **Response**: Returns a `400 Bad Request` with an error message detailing the issue.
+
+### InvalidCityException
+- **Description**: This exception is thrown when the city provided is not recognized by the system.
+- **Response**: Returns a `404 Not Found` with an error message detailing the issue.
+
+### MissingServletRequestParameterException
+- **Description**: This exception is thrown when a required request parameter is missing.
+- **Response**: Returns a `400 Bad Request` with a message indicating which parameter is missing.
+
+### MethodArgumentTypeMismatchException
+- **Description**: This exception is thrown when a method argument is not the expected type.
+- **Response**: Returns a `400 Bad Request` with a message detailing the expected type and the provided value.
+
+### DateTimeParseException Handler
+- **Description**: Handles incorrect date and time format inputs.
+- **Response**: A `400 Bad Request` status with a message indicating the correct date and time format.
+
+## Usage
+These exceptions are used throughout the API to ensure that clients receive informative error messages that can guide them to correct their requests. This approach enhances the robustness and usability of the API.
 
