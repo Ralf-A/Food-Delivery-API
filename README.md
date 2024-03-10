@@ -6,9 +6,11 @@ A sub-functionality of the food delivery application, which
 calculates the delivery fee for food couriers based on regional base fee, vehicle type, and weather
 conditions.
 
-Calculate delivery base fee based on weather for a current or a specified time.
+⏰ Calculate delivery base fee based on weather for a current or a specified time. ⏰
 
-By default all business logic is same as in task's description, but base fees and extra fees can be managed with CRUD endpoints below. 
+⚙️ By default all business logic is same as in task's description, but base fees and extra fees can be managed with CRUD endpoints below. ⚙️
+
+❗ Exceptions detailed below. ❗
 
 ## Delivery Fee Calculation Endpoint
 
