@@ -17,20 +17,20 @@ public class VehicleTypeFees {
     @Column(nullable = false)
     private double tartuCarBaseFee;
     @Column(nullable = false)
-    private double parnuCarBaseFee;
+    private double pärnuCarBaseFee;
 
     @Column(nullable = false)
     private double tallinnScooterBaseFee;
     @Column(nullable = false)
     private double tartuScooterBaseFee;
     @Column(nullable = false)
-    private double parnuScooterBaseFee;
+    private double pärnuScooterBaseFee;
 
     @Column(nullable = false)
     private double tallinnBikeBaseFee;
     @Column(nullable = false)
     private double tartuBikeBaseFee;
     @Column(nullable = false)
-    private double parnuBikeBaseFee;
+    private double pärnuBikeBaseFee;
 
 }

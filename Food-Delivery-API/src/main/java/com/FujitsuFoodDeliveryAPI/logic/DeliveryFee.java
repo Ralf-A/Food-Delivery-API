@@ -1,16 +1,46 @@
 package com.FujitsuFoodDeliveryAPI.logic;
 
+import com.FujitsuFoodDeliveryAPI.domain.TemperatureFees;
+import com.FujitsuFoodDeliveryAPI.domain.VehicleTypeFees;
+import com.FujitsuFoodDeliveryAPI.domain.WeatherPhenomenonFees;
+import com.FujitsuFoodDeliveryAPI.domain.WindSpeedFees;
 import com.FujitsuFoodDeliveryAPI.exception.InvalidCityException;
 import com.FujitsuFoodDeliveryAPI.exception.InvalidVehicleException;
 
+import com.FujitsuFoodDeliveryAPI.repository.TemperatureFeeRepository;
+import com.FujitsuFoodDeliveryAPI.repository.VehicleTypeFeeRepository;
+import com.FujitsuFoodDeliveryAPI.repository.WeatherPhenomenonFeeRepository;
+import com.FujitsuFoodDeliveryAPI.repository.WindSpeedFeeRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Service
 public class DeliveryFee {
     private static final Logger LOGGER = LoggerFactory.getLogger(DeliveryFee.class);
 
+    @Autowired
+    private VehicleTypeFeeRepository vehicleTypeFeeRepository;
+    @Autowired
+    private WeatherPhenomenonFeeRepository weatherPhenomenonFeeRepository;
+    @Autowired
+    private WindSpeedFeeRepository windSpeedFeeRepository;
+    @Autowired
+    private TemperatureFeeRepository temperatureFeeRepository;
+
 
     // Method to calculate the delivery fee based on input parameters
+
     public double calculateDeliveryFee(String city, String vehicleType, double temperature, double windSpeed, String weatherPhenomenon) {
         double baseFee = getBaseFee(city, vehicleType);
         double temperatureFee = getTemperatureFee(temperature);
@@ -23,35 +53,35 @@ public class DeliveryFee {
     }
 
     private double getBaseFee(String city, String vehicleType) {
-        // Define base fees for each city and vehicle type
+        VehicleTypeFees vehicleTypeFees = vehicleTypeFeeRepository.findLatestVehicleTypeFees();
         switch (city) {
             case "Tallinn":
                 if ("car".equals(vehicleType)) {
-                    return 4.0;
+                    return vehicleTypeFees.getTallinnCarBaseFee();
                 } else if ("scooter".equals(vehicleType)) {
-                    return 3.5;
+                    return vehicleTypeFees.getTallinnScooterBaseFee();
                 } else if ("bike".equals(vehicleType)) {
-                    return 3.0;
+                    return vehicleTypeFees.getTallinnBikeBaseFee();
                 } else {
                     throw new InvalidVehicleException("Invalid vehicle type");
                 }
             case "Tartu":
                 if ("car".equals(vehicleType)) {
-                    return 3.5;
+                    return vehicleTypeFees.getTartuCarBaseFee();
                 } else if ("scooter".equals(vehicleType)) {
-                    return 3.0;
+                    return vehicleTypeFees.getTartuScooterBaseFee();
                 } else if ("bike".equals(vehicleType)) {
-                    return 2.5;
+                    return vehicleTypeFees.getTartuBikeBaseFee();
                 } else {
                     throw new InvalidVehicleException("Invalid vehicle type");
                 }
             case "Pärnu":
                 if ("car".equals(vehicleType)) {
-                    return 3.0;
+                    return vehicleTypeFees.getParnuCarBaseFee();
                 } else if ("scooter".equals(vehicleType)) {
-                    return 2.5;
+                    return vehicleTypeFees.getParnuScooterBaseFee();
                 } else if ("bike".equals(vehicleType)) {
-                    return 2.0;
+                    return vehicleTypeFees.getParnuBikeBaseFee();
                 } else {
                     throw new InvalidVehicleException("Invalid vehicle type");
                 }
@@ -61,25 +91,29 @@ public class DeliveryFee {
     }
 
 
+
     private double getTemperatureFee(double temperature) {
+        TemperatureFees temperatureFees = temperatureFeeRepository.findLatestTemperatureFees();
         // Extra fee for temperature
-        if (temperature < -10.0) {
-            return 1.0;
-        } else if (temperature < 0.0) {
-            return 0.5;
+        if (temperature < temperatureFees.getColdTemperatureCeiling()) {
+            return temperatureFees.getColdTemperatureFee();
+        } else if (temperature < temperatureFees.getLowTemperatureFee()) {
+            return temperatureFees.getLowTemperatureFee();
         }
         return 0.0;
     }
 
     private double getWindSpeedFee(String vehicleType, double windSpeed) {
+        WindSpeedFees windSpeedFees = windSpeedFeeRepository.findLatestWindSpeedFees();
         // Extra fee for wind speed (only for Bike)
-        if ("Bike".equals(vehicleType) && windSpeed > 20.0) {
+        if ("Bike".equals(vehicleType) && windSpeed > windSpeedFees.getWindFeeCeiling()) {
             throw new InvalidVehicleException("Usage of selected vehicle type is forbidden");
         }
-        return windSpeed > 10.0 ? 0.5 : 0.0;
+        return windSpeed > windSpeedFees.getWindFeeFloor() ? windSpeedFees.getWindFee() : 0.0;
     }
 
     private double getWeatherPhenomenonFee(String weatherPhenomenon) {
+        WeatherPhenomenonFees weatherPhenomenonFees = weatherPhenomenonFeeRepository.findLatestWeatherPhenomenonFees();
         // Extra fee for weather phenomenon
         switch (weatherPhenomenon) {
             case "Heavy snow shower":
@@ -92,16 +126,16 @@ public class DeliveryFee {
             case "Heavy snowfall":
             case "Blowing snow":
             case "Drifting snow":
-                return 1.0;
+                return weatherPhenomenonFees.getHeavyWeatherFee();
             case "Light shower":
             case "Moderate shower":
             case "Heavy shower":
             case "Light rain":
             case "Moderate rain":
             case "Heavy rain":
-                return 0.5;
+                return weatherPhenomenonFees.getBadWeatherFee();
             default:
-                return 0.0;
+                return weatherPhenomenonFees.getNormalWeatherFee();
         }
     }
 }

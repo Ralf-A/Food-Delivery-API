@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 
 @Service
 public class DeliveryFeeService {
-
+    @Autowired
+    private DeliveryFee deliveryFee;
     @Autowired
     private WeatherDataService weatherDataService;
 
@@ -30,7 +31,6 @@ public class DeliveryFeeService {
         String weatherPhenomenon = weatherData.getWeatherPhenomenon();
 
         // Calculate and return the delivery fee
-        DeliveryFee deliveryFee = new DeliveryFee();
         return deliveryFee.calculateDeliveryFee(city, vehicleType, temperature, windSpeed, weatherPhenomenon);
     }
 }

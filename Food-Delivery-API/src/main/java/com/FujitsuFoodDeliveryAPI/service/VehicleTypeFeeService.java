@@ -19,14 +19,13 @@ public class VehicleTypeFeeService {
 
     public VehicleTypeFees saveVehicleTypeFees(Double tallinnCarBaseFee, Double tallinnBikeBaseFee, Double tallinnScooterBaseFee,
                                                Double tartuBikeBaseFee, Double tartuCarBaseFee, Double tartuScooterBaseFee, 
-                                               Double parnuBikeBaseFee, Double parnuCarBaseFee, Double parnuScooterBaseFee) {
+                                               Double pärnuBikeBaseFee, Double pärnuCarBaseFee, Double pärnuScooterBaseFee) {
         LOGGER.info("Initializing change temperature fees");
         VehicleTypeFees vehicleTypeFees = vehicleTypeFeeRepository.findLatestVehicleTypeFees();
 
         if (vehicleTypeFees == null) {
             vehicleTypeFees = new VehicleTypeFees();
         }
-
         if (tallinnCarBaseFee != null) {
             vehicleTypeFees.setTallinnCarBaseFee(tallinnCarBaseFee);
         }
@@ -45,14 +44,14 @@ public class VehicleTypeFeeService {
         if (tartuScooterBaseFee != null) {
             vehicleTypeFees.setTartuScooterBaseFee(tartuScooterBaseFee);
     }
-        if (parnuScooterBaseFee != null) {
-            vehicleTypeFees.setParnuScooterBaseFee(parnuScooterBaseFee);
+        if (pärnuScooterBaseFee != null) {
+            vehicleTypeFees.setPärnuScooterBaseFee(pärnuScooterBaseFee);
     }
-        if (parnuBikeBaseFee != null) {
-            vehicleTypeFees.setParnuBikeBaseFee(parnuBikeBaseFee);
+        if (pärnuBikeBaseFee != null) {
+            vehicleTypeFees.setPärnuBikeBaseFee(pärnuBikeBaseFee);
     }
-        if (parnuCarBaseFee != null) {
-            vehicleTypeFees.setParnuCarBaseFee(parnuCarBaseFee);
+        if (pärnuCarBaseFee != null) {
+            vehicleTypeFees.setPärnuCarBaseFee(pärnuCarBaseFee);
     }
         LOGGER.info("Changing vehicle type fees to: " +
                 (tallinnCarBaseFee != null ? tallinnCarBaseFee : "no change") + ", " +
@@ -61,9 +60,9 @@ public class VehicleTypeFeeService {
                 (tartuCarBaseFee != null ? tartuCarBaseFee : "no change") + ", " +
                 (tartuScooterBaseFee != null ? tartuScooterBaseFee : "no change") + ", " +
                 (tartuBikeBaseFee != null ? tartuBikeBaseFee : "no change") + ", " +
-                (parnuCarBaseFee != null ? parnuCarBaseFee : "no change") + ", " +
-                (parnuScooterBaseFee != null ? parnuScooterBaseFee : "no change") + ", " +
-                (parnuBikeBaseFee != null ? parnuBikeBaseFee : "no change"));
+                (pärnuCarBaseFee != null ? pärnuCarBaseFee : "no change") + ", " +
+                (pärnuScooterBaseFee != null ? pärnuScooterBaseFee : "no change") + ", " +
+                (pärnuBikeBaseFee != null ? pärnuBikeBaseFee : "no change"));
 
         return vehicleTypeFeeRepository.save(vehicleTypeFees);
     }
