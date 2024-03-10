@@ -14,7 +14,7 @@ public class DefaultWindSpeedFeeConfig {
     private WindSpeedFeeRepository windSpeedFeeRepository;
 
     @Bean
-    public TemperatureFees defaultTemperatureFee() {
+    public WindSpeedFees defaultWindSpeedFee() {
         // Check if there's already an entry in the database
         if (windSpeedFeeRepository.count() == 0) {
             WindSpeedFees defaultFee = new WindSpeedFees();

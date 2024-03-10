@@ -14,6 +14,6 @@ import java.util.Optional;
 
 @Repository
 public interface WeatherPhenomenonFeeRepository extends JpaRepository<WeatherPhenomenonFees, Long> {
-    @Query("SELECT tf FROM WeatherPhenomenonFees tf ORDER BY tf.id DESC")
+    @Query("SELECT wpf FROM WeatherPhenomenonFees wpf ORDER BY wpf.id DESC")
     WeatherPhenomenonFees findLatestWeatherPhenomenonFees();
 }

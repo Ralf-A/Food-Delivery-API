@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface VehicleTypeFeeRepository extends JpaRepository<VehicleTypeFees, Long> {
-    @Query("SELECT tf FROM VehicleTypeFees tf ORDER BY tf.id DESC")
+    @Query("SELECT vtf FROM VehicleTypeFees vtf ORDER BY vtf.id DESC")
     VehicleTypeFees findLatestVehicleTypeFees();
 }

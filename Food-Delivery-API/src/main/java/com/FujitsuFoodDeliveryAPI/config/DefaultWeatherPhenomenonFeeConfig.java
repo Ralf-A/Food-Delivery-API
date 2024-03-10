@@ -15,7 +15,7 @@ public class DefaultWeatherPhenomenonFeeConfig {
     private WeatherPhenomenonFeeRepository weatherPhenomenonFeeRepository;
 
     @Bean
-    public TemperatureFees defaultTemperatureFee() {
+    public WeatherPhenomenonFees weatherPhenomenonFee() {
         // Check if there's already an entry in the database
         if (weatherPhenomenonFeeRepository.count() == 0) {
             WeatherPhenomenonFees defaultFee = new WeatherPhenomenonFees();

@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface WindSpeedFeeRepository extends JpaRepository<WindSpeedFees, Long> {
-    @Query("SELECT tf FROM WindSpeedFees tf ORDER BY tf.id DESC")
+    @Query("SELECT wsf FROM WindSpeedFees wsf ORDER BY wsf.id DESC")
     WindSpeedFees findLatestWindSpeedFees();
 }
