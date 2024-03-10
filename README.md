@@ -8,7 +8,7 @@ conditions.
 
 ⏰ Calculate delivery base fee based on weather for a current or a specified time. ⏰
 
-⚙️ By default all business logic is same as in task's description, but base fees and extra fees can be managed with CRUD endpoints below. ⚙️
+⚙️ By default all business logic is same as in task's description, but base fees and extra fees can be managed with REST endpoints below. ⚙️
 
 ❗ Exceptions detailed below. ❗
 
