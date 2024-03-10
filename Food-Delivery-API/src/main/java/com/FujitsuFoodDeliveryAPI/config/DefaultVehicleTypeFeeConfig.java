@@ -19,13 +19,13 @@ public class DefaultVehicleTypeFeeConfig {
             VehicleTypeFees defaultFee = new VehicleTypeFees();
             defaultFee.setTallinnCarBaseFee(4);
             defaultFee.setTartuCarBaseFee(3.5);
-            defaultFee.setParnuCarBaseFee(3);
+            defaultFee.setPärnuCarBaseFee(3);
             defaultFee.setTallinnScooterBaseFee(3.5);
             defaultFee.setTartuScooterBaseFee(3);
-            defaultFee.setParnuScooterBaseFee(2.5);
+            defaultFee.setPärnuScooterBaseFee(2.5);
             defaultFee.setTallinnBikeBaseFee(3);
             defaultFee.setTartuBikeBaseFee(2.5);
-            defaultFee.setParnuBikeBaseFee(2);
+            defaultFee.setPärnuBikeBaseFee(2);
             vehicleTypeFeeRepository.save(defaultFee);
         }
         return null;
