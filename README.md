@@ -62,6 +62,23 @@
 - **Response**: `WeatherPhenomenonFees` object with status `201 Created`.
 
 ### GET /getWeatherPhenomenonFees
+- **Description**: Retrieve the latest weather phenomenon fees.
+- **Response**: `WeatherPhenomenonFees` object.
+
+## Wind Speed Fees Endpoints
+
+### POST /postWindSpeedFees
+- **Description**: Save fees based on wind speed thresholds.
+- **Parameters**:
+  - `windFee` (Double, optional): Fee associated with a specific wind speed.
+  - `windFeeFloor` (Double, optional): Lower limit for wind speed to apply the fee.
+  - `windFeeCeiling` (Double, optional): Upper limit for wind speed to apply the fee.
+- **Response**: `WindSpeedFees` object with status `201 Created`.
+
+### GET /getWindSpeedFees
+- **Description**: Retrieve the latest wind speed fees.
+- **Response**: `WindSpeedFees` object.
+
 - **Description**: Retrieve the latest fees based on weather phenomena.
 - **Response**: `WeatherPhenomenonFees` object.
 
