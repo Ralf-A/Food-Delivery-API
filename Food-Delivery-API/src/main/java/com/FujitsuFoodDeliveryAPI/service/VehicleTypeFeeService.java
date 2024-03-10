@@ -54,12 +54,22 @@ public class VehicleTypeFeeService {
         if (parnuCarBaseFee != null) {
             vehicleTypeFees.setParnuCarBaseFee(parnuCarBaseFee);
     }
+        LOGGER.info("Changing vehicle type fees to: " +
+                (tallinnCarBaseFee != null ? tallinnCarBaseFee : "no change") + ", " +
+                (tallinnScooterBaseFee != null ? tallinnScooterBaseFee : "no change") + ", " +
+                (tallinnBikeBaseFee != null ? tallinnBikeBaseFee : "no change") + ", " +
+                (tartuCarBaseFee != null ? tartuCarBaseFee : "no change") + ", " +
+                (tartuScooterBaseFee != null ? tartuScooterBaseFee : "no change") + ", " +
+                (tartuBikeBaseFee != null ? tartuBikeBaseFee : "no change") + ", " +
+                (parnuCarBaseFee != null ? parnuCarBaseFee : "no change") + ", " +
+                (parnuScooterBaseFee != null ? parnuScooterBaseFee : "no change") + ", " +
+                (parnuBikeBaseFee != null ? parnuBikeBaseFee : "no change"));
 
         return vehicleTypeFeeRepository.save(vehicleTypeFees);
     }
     
     public VehicleTypeFees findLatestVehicleTypeFees(){
-        LOGGER.info("Getting latest temperature fees: " + vehicleTypeFeeRepository.findLatestVehicleTypeFees());
+        LOGGER.info("Getting latest vehicle type fees: " + vehicleTypeFeeRepository.findLatestVehicleTypeFees());
         return vehicleTypeFeeRepository.findLatestVehicleTypeFees();
     }
 }

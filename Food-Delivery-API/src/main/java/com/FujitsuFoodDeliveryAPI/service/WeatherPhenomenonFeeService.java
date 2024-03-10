@@ -33,8 +33,10 @@ public class WeatherPhenomenonFeeService {
         if (normalWeatherFee != null) {
             weatherPhenomenonFees.setNormalWeatherFee(normalWeatherFee);
         }
-        LOGGER.info("Setting latest weather phenomenon fees: heavy weather fee - " + heavyWeatherFee + ", bad weather fee - " +
-                badWeatherFee + ", normal weather fee - " + normalWeatherFee);
+        LOGGER.info("Changing temperature fees to: " +
+                (heavyWeatherFee != null ? heavyWeatherFee : "no change") + ", " +
+                (badWeatherFee != null ? badWeatherFee : "no change") + ", " +
+                (normalWeatherFee != null ? normalWeatherFee : "no change"));
         return weatherPhenomenonFeeRepository.save(weatherPhenomenonFees);
     }
 
