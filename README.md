@@ -29,12 +29,9 @@ conditions.
 ### GET /calculateDeliveryFee
 - **Description**: Calculate the delivery fee based on city, vehicle type, and date/time.
 - **Parameters**:
-  ```json
-  {
-    `city` (String, required): The city for delivery.
-    `vehicle` (String, required): The type of vehicle used for delivery.
-    `dateTime` (LocalDateTime, optional): The date and time for delivery, formatted as `yyyy-MM-dd'T'HH:mm`.
-  }
+   - `city` (String, required): The city for delivery.
+   - `vehicle` (String, required): The type of vehicle used for delivery.
+   - `dateTime` (LocalDateTime, optional): The date and time for delivery, formatted as `yyyy-MM-dd'T'HH:mm`.
 - **Response**: A double value representing the calculated delivery fee.
 
 ## Vehicle Type Fees Endpoints
