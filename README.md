@@ -97,9 +97,6 @@ conditions.
 - **Description**: Retrieve the latest wind speed fees.
 - **Response**: `WindSpeedFees` object.
 
-- **Description**: Retrieve the latest fees based on weather phenomena.
-- **Response**: `WeatherPhenomenonFees` object.
-
 # Exception Handling in Fujitsu Food Delivery API
 
 ## Overview
