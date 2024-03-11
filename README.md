@@ -4,7 +4,7 @@
 
 A sub-functionality of the food delivery application, which
 calculates the delivery fee for food couriers based on regional base fee, vehicle type, and weather
-conditions.
+conditions. Includes basic tests for creating new weather data and testing the main endpoint of calculateDeliveryFee.
 
 ⏰ Calculate delivery base fee based on weather for a current or a specified time. ⏰
 
