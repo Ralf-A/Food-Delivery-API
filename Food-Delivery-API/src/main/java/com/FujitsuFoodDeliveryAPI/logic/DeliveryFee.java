@@ -156,7 +156,7 @@ public class DeliveryFee {
         if ("bike".equals(vehicleType) || ("scooter").equals(vehicleType)){
             LOGGER.info("Getting weather phenomenon extra fee for phenomenon speed of " + weatherPhenomenon + " and vehicle " + vehicleType);
             WeatherPhenomenonFees weatherPhenomenonFees = weatherPhenomenonFeeRepository.findLatestWeatherPhenomenonFees();
-            if (weatherPhenomenon.equals("glaze") || weatherPhenomenon.equals("hail") || weatherPhenomenon.equals("thunder")){
+            if (weatherPhenomenon.equals("Glaze") || weatherPhenomenon.equals("Hail") || weatherPhenomenon.equals("Thunder")){
                 throw new InvalidVehicleException("“Usage of selected vehicle type is forbidden");
             }
             else {
