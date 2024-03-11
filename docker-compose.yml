@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  fujitsu-api:
+    container_name: fujitsu-api
+    build:
+      context: Food-Delivery-API
+      dockerfile: Dockerfile
+    image: fujitsu-api:latest
+    ports:
+      - 8080:8080
+    networks:
+      - food-delivery-network
+networks:
+  food-delivery-network:
+    driver: bridge

@@ -8,6 +8,13 @@ plugins {
 group = 'com.Fujitsu-Food-Delivery-API'
 version = '0.0.1-SNAPSHOT'
 
+bootJar {
+	mainClass = 'com.FujitsuFoodDeliveryAPI.FoodDeliveryApiApplication'
+	archiveFileName = 'Fujitsu-Food-Delivery-API.jar'
+	destinationDirectory = file('src')
+}
+
+
 java {
 	sourceCompatibility = '17'
 }

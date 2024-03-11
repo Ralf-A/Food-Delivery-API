@@ -1,11 +1,16 @@
 package com.FujitsuFoodDeliveryAPI.exception;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -35,24 +40,28 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<String> handleMissingParams(MissingServletRequestParameterException ex) {
+    public ResponseEntity<Object> handleMissingParams(MissingServletRequestParameterException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
         String name = ex.getParameterName();
-        // Log the exception details for debugging
-        // Return a user-friendly message and a Bad Request status
-        return new ResponseEntity<>(
-                "The parameter '" + name + "' is required.",
-                HttpStatus.BAD_REQUEST);
+        String message = String.format("The parameter '" + name + "' is required.");
+        body.put("error", message);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+    public ResponseEntity<Object> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
         String name = ex.getName();
         String type = ex.getRequiredType().getSimpleName();
         Object value = ex.getValue();
         String message = String.format("The parameter '%s' requires a value of type '%s', but '%s' was provided.", name, type, value);
-
-        // Log the exception details for debugging
-        // Return a user-friendly message and a Bad Request status
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        body.put("error", message);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("error", "The requested URL was not found on this server. Please refer to documentation on https://github.com/Ralf-A/Fujitsu-Food-Delivery-API");
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 }
 
