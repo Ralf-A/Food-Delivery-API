@@ -116,7 +116,7 @@ The `GlobalExceptionHandler` class in the Fujitsu Food Delivery API provides cen
 
 ### InvalidCityException
 - **Description**: This exception is thrown when the city provided is not recognized by the system.
-- **Response**: Returns a `400 Bad Request` with an error message detailing the issue.
+- **Response**: Returns a `404 Not Found` with an error message detailing the issue.
 
 ### MissingServletRequestParameterException
 - **Description**: This exception is thrown when a required request parameter is missing.
