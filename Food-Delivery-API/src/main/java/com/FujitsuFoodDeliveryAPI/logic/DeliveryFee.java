@@ -62,7 +62,7 @@ public class DeliveryFee {
         double result = baseFee + temperatureFee + windSpeedFee + weatherPhenomenonFee;
         LOGGER.info("Getting fee for city: " + city + ", vehicle: " + vehicleType + ", for temperature: " + temperature + ", for windSpeed: " +
                 windSpeed + ", for weatherphenomenon: " + weatherPhenomenon + ", TOTAL FEE: " + result);
-        
+
         return result;
     }
 

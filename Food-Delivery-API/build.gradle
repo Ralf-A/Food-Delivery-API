@@ -11,7 +11,7 @@ version = '0.0.1-SNAPSHOT'
 bootJar {
 	mainClass = 'com.FujitsuFoodDeliveryAPI.FoodDeliveryApiApplication'
 	archiveFileName = 'Fujitsu-Food-Delivery-API.jar'
-	destinationDirectory = file('src')
+	destinationDirectory = file('/')
 }
 
 
