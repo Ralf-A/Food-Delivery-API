@@ -33,7 +33,7 @@ public class CalculateDeliveryFeeAPITests {
     }
     @Test
     public void testCalculateDeliveryFeeTallinnCityError() {
-        // Test that error 404 and No current weather data found for the specified city is returned when city is wrong
+        // Test that error 400 and No current weather data found for the specified city is returned when city is wrong
         String city = "aaafasfsaa";
         String vehicle = "car";
         String expectedError = "{\"error\":\"No current weather data found for the specified city.\"}";
@@ -76,7 +76,7 @@ public class CalculateDeliveryFeeAPITests {
         // Test that error 400 and No current weather data found for the specified city is returned when parameter is missing or wrong type
         String city = "Tallinn";
         String vehicle = "car";
-        String expectedError = "The parameter 'vehicle' is required.";
+        String expectedError = "{\"error\":\"The parameter 'vehicle' is required.\"}";
         String error = given()
                 .queryParam("city", city)
                 .queryParam("aaa", vehicle)
@@ -94,7 +94,7 @@ public class CalculateDeliveryFeeAPITests {
     @Test
     public void testCalculateDeliveryFeeNoParameterNames() {
         // Test that error 400 and No current weather data found for the specified city is returned when parameter is missing or wrong type
-        String expectedError = "The parameter 'city' is required.";
+        String expectedError = "{\"error\":\"The parameter 'city' is required.\"}";
         String error = given()
                 .when()
                 .get("http://localhost:8080/calculateDeliveryFee")
@@ -106,5 +106,4 @@ public class CalculateDeliveryFeeAPITests {
 
         assertEquals(expectedError, error);
     }
-
 }
