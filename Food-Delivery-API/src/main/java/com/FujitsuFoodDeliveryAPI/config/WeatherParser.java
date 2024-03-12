@@ -29,14 +29,11 @@ public class WeatherParser {
     @Autowired
     private WeatherDataService weatherDataService;
 
-    /**
-     * Initializes the parser and triggers the first data parsing operation at application startup.
-     */
-    @PostConstruct
+    @PostConstruct //Initializes the parser and triggers the first data parsing operation at application startup.
     public void init() {
         parseWeatherData();
     }
-    @Scheduled(cron = "0 15 * * * ?") // The scheduled task to run every HH:15
+    @Scheduled(cron = "0 15 * * * ?") // The scheduled task to run every HH:15/CronJob. Configurable easily.
     //@Scheduled(fixedRate = 60000) // Runs every 60 seconds for testing
 
     /**
