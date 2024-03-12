@@ -13,6 +13,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -62,6 +63,12 @@ public class GlobalExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("error", "The requested URL was not found on this server. Please refer to documentation on https://github.com/Ralf-A/Fujitsu-Food-Delivery-API");
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(DateTimeParseException.class)
+    public ResponseEntity<Object> handleDateTimeParseException(DateTimeParseException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("error", "Invalid date and time format. Please use the format yyyy-MM-dd'T'HH:mm.");
+        return new ResponseEntity(body, HttpStatus.BAD_REQUEST);
     }
 }
 
