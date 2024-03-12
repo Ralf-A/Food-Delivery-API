@@ -38,7 +38,6 @@ public class DeliveryFeeService {
         double temperature = weatherData.getAirTemperature();
         double windSpeed = weatherData.getWindSpeed();
         String weatherPhenomenon = weatherData.getWeatherPhenomenon();
-
         // Calculate and return the delivery fee
         return deliveryFee.calculateDeliveryFee(city, vehicleType, temperature, windSpeed, weatherPhenomenon);
     }

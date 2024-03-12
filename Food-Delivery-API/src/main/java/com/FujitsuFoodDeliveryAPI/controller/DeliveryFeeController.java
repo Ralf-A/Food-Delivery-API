@@ -25,7 +25,6 @@ public class DeliveryFeeController {
     /**
      * Controller for calculating delivery fee - specific API documentation on GitHub page
      */
-
     @GetMapping("/calculateDeliveryFee")
     public double calculateDeliveryFee(
             @RequestParam String city,

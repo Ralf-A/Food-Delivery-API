@@ -49,15 +49,20 @@ public class DeliveryFee {
      * @return the total calculated delivery fee
      */
     public double calculateDeliveryFee(String city, String vehicleType, double temperature, double windSpeed, String weatherPhenomenon) {
+        // String parameters to lowercase for foolproofing
         vehicleType = vehicleType.toLowerCase();
+        city = city.toLowerCase();
         weatherPhenomenon = weatherPhenomenon.toLowerCase();
+        // Calculate total fee using base and extra fees
         double baseFee = getBaseFee(city, vehicleType);
         double temperatureFee = getTemperatureFee(vehicleType, temperature);
         double windSpeedFee = getWindSpeedFee(vehicleType, windSpeed);
         double weatherPhenomenonFee = getWeatherPhenomenonFee(vehicleType, weatherPhenomenon);
+
         double result = baseFee + temperatureFee + windSpeedFee + weatherPhenomenonFee;
         LOGGER.info("Getting fee for city: " + city + ", vehicle: " + vehicleType + ", for temperature: " + temperature + ", for windSpeed: " +
                 windSpeed + ", for weatherphenomenon: " + weatherPhenomenon + ", TOTAL FEE: " + result);
+        
         return result;
     }
 
@@ -72,7 +77,7 @@ public class DeliveryFee {
         VehicleTypeFees vehicleTypeFees = vehicleTypeFeeRepository.findLatestVehicleTypeFees();
         LOGGER.info("Getting base fee for city " + city + " and vehicle " + vehicleType);
         switch (city) {
-            case "Tallinn":
+            case "tallinn":
                 if ("car".equals(vehicleType)) {
                     return vehicleTypeFees.getTallinnCarBaseFee();
                 } else if ("scooter".equals(vehicleType)) {
@@ -82,7 +87,7 @@ public class DeliveryFee {
                 } else {
                     throw new InvalidVehicleException("Invalid vehicle type");
                 }
-            case "Tartu":
+            case "tartu":
                 if ("car".equals(vehicleType)) {
                     return vehicleTypeFees.getTartuCarBaseFee();
                 } else if ("scooter".equals(vehicleType)) {
@@ -92,7 +97,7 @@ public class DeliveryFee {
                 } else {
                     throw new InvalidVehicleException("Invalid vehicle type");
                 }
-            case "Pärnu":
+            case "pärnu":
                 if ("car".equals(vehicleType)) {
                     return vehicleTypeFees.getPärnuCarBaseFee();
                 } else if ("scooter".equals(vehicleType)) {
@@ -156,28 +161,28 @@ public class DeliveryFee {
         if ("bike".equals(vehicleType) || ("scooter").equals(vehicleType)){
             LOGGER.info("Getting weather phenomenon extra fee for phenomenon speed of " + weatherPhenomenon + " and vehicle " + vehicleType);
             WeatherPhenomenonFees weatherPhenomenonFees = weatherPhenomenonFeeRepository.findLatestWeatherPhenomenonFees();
-            if (weatherPhenomenon.equals("Glaze") || weatherPhenomenon.equals("Hail") || weatherPhenomenon.equals("Thunder")){
+            if (weatherPhenomenon.equals("glaze") || weatherPhenomenon.equals("hail") || weatherPhenomenon.equals("thunder")){
                 throw new InvalidVehicleException("“Usage of selected vehicle type is forbidden");
             }
             else {
                 switch (weatherPhenomenon) {
-                    case "Heavy snow shower":
-                    case "Light snow shower":
-                    case "Moderate snow shower":
-                    case "Light sleet":
-                    case "Moderate sleet":
-                    case "Light snowfall":
-                    case "Moderate snowfall":
-                    case "Heavy snowfall":
-                    case "Blowing snow":
-                    case "Drifting snow":
+                    case "heavy snow shower":
+                    case "light snow shower":
+                    case "moderate snow shower":
+                    case "light sleet":
+                    case "moderate sleet":
+                    case "light snowfall":
+                    case "moderate snowfall":
+                    case "heavy snowfall":
+                    case "blowing snow":
+                    case "drifting snow":
                         return weatherPhenomenonFees.getHeavyWeatherFee();
-                    case "Light shower":
-                    case "Moderate shower":
-                    case "Heavy shower":
-                    case "Light rain":
-                    case "Moderate rain":
-                    case "Heavy rain":
+                    case "light shower":
+                    case "moderate shower":
+                    case "heavy shower":
+                    case "light rain":
+                    case "moderate rain":
+                    case "heavy rain":
                         return weatherPhenomenonFees.getBadWeatherFee();
                     default:
                         return weatherPhenomenonFees.getNormalWeatherFee();
