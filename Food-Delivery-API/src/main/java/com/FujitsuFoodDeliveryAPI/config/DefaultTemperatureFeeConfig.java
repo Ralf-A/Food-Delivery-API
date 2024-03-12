@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DefaultTemperatureFeeConfig {
     /**
-     * Adds default configuration from task's description for fee calculation
+     * Adds default configuration from task's description for fee calculation for temperature fees and low/cold temperature ceilings
      */
 
     @Autowired

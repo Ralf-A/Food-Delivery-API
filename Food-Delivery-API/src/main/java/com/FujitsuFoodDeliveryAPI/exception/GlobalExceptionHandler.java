@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
+    // Class for global exceptions - covers all exceptions from invalid vehicle type, city, timestamp, missing parameters, invalid formatting, missing handlers
     @ExceptionHandler(IncorrectTimeStampException.class)
     public ResponseEntity<Object> handleIncorrectTimestampException(IncorrectTimeStampException ex) {
         Map<String, Object> body = new LinkedHashMap<>();

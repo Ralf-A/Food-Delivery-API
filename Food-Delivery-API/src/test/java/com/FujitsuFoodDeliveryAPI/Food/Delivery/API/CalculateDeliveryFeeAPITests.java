@@ -33,7 +33,7 @@ public class CalculateDeliveryFeeAPITests {
     }
     @Test
     public void testCalculateDeliveryFeeTallinnCityError() {
-        // Test that error 404 and No current weather data found for the specified city is returned when city is wrong
+        // Test that error 400 and No current weather data found for the specified city is returned when city is wrong
         String city = "aaafasfsaa";
         String vehicle = "car";
         String expectedError = "{\"error\":\"No current weather data found for the specified city.\"}";

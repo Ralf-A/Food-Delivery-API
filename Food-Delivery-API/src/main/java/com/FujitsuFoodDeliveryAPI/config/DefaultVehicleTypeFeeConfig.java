@@ -12,7 +12,7 @@ public class DefaultVehicleTypeFeeConfig {
     @Autowired
     private VehicleTypeFeeRepository vehicleTypeFeeRepository;
     /**
-     * Adds default configuration from task's description for fee calculation
+     * Adds default configuration from task's description for fee calculation in terms of vehicle and city fee
      */
 
     @Bean

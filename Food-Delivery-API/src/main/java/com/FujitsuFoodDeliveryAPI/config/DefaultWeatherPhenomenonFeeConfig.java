@@ -14,7 +14,7 @@ public class DefaultWeatherPhenomenonFeeConfig {
     @Autowired
     private WeatherPhenomenonFeeRepository weatherPhenomenonFeeRepository;
     /**
-     * Adds default configuration from task's description for fee calculation
+     * Adds default configuration from task's description for fee calculation for weather phenomenon fees
      */
 
     @Bean
