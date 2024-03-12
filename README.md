@@ -1,10 +1,10 @@
-# Fujitsu Food Delivery API Documentation
+# Fujitsu Food Delivery API 
 
 # Description
 
 A sub-functionality of the food delivery application, which
 calculates the delivery fee for food couriers based on regional base fee, vehicle type, and weather
-conditions. Includes basic tests for creating new weather data and testing the main endpoint of calculateDeliveryFee.
+conditions. Includes basic tests for creating new weather data and testing the main endpoint of calculateDeliveryFee. 
 
 ⏰ Calculate delivery base fee based on weather for a current or a specified time. ⏰
 
@@ -23,6 +23,8 @@ conditions. Includes basic tests for creating new weather data and testing the m
 
 ## Option 3: 
 - Running `FujitsuFoodApplicationAPI.java` in you IDE
+
+# API Documentation 
 
 ## Delivery Fee Calculation Endpoint
 
