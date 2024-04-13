@@ -1,4 +1,4 @@
-# Fujitsu Food Delivery API 
+# Food Delivery API 
 
 # Description
 
