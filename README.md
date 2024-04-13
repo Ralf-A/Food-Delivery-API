@@ -19,10 +19,10 @@ conditions. Includes basic tests for creating new weather data and testing the m
 - **Step 3**: By default, app is running on 8080
 
 ## Option 2: 
-- Running the `Fujitsu-Food-Delivery-API.jar` file
+- Running the `Food-Delivery-API.jar` file
 
 ## Option 3: 
-- Running `FujitsuFoodApplicationAPI.java` in you IDE
+- Running `FoodApplicationAPI.java` in you IDE
 
 # API Documentation 
 
